@@ -19,8 +19,8 @@ else
     List<string> Names = [];
     List<string?> Species = [];
     List<string?> Descriptions = [];
-    List<string?> FirstAppeared = [];
-    List<UInt64> YearCreated = [];
+    List<string?> FirstAppearances = [];
+    List<UInt64> YearsCreated = [];
     // to populate the lists with data, read from the data file
     try
     {
@@ -43,9 +43,9 @@ else
                 // 3rd array element contains character description
                 Species.Add(characterDetails[3]);
                 // 3rd array element contains character description
-                FirstAppeared.Add(characterDetails[4]);
+                FirstAppearances.Add(characterDetails[4]);
                 // 3rd array element contains character description
-                YearCreated.Add(UInt64.Parse(characterDetails[5]));
+                YearsCreated.Add(UInt64.Parse(characterDetails[5]));
             }
         }
         sr.Close();
@@ -85,15 +85,27 @@ else
                     // input character description
                     Console.WriteLine("Enter description:");
                     string? Description = Console.ReadLine();
+                    // input character description
+                    Console.WriteLine("Species:");
+                    string? Specie = Console.ReadLine();
+                    // input character description
+                    Console.WriteLine("First game appearance:");
+                    string? FirstAppearance = Console.ReadLine();
+                    // input character description
+                    Console.WriteLine("Year of first appearance:");
+                    UInt64 YearCreated = UInt64.Parse(Console.ReadLine() ?? "0");
                     // Console.WriteLine($"{Id}, {Name}, {Description}");
                     // create file from data
                     StreamWriter sw = new(file, true);
-                    sw.WriteLine($"{Id},{Name},{Description}");
+                    sw.WriteLine($"{Id},{Name},{Description},{Specie},{FirstAppearance},{YearCreated}");
                     sw.Close();
                     // add new character details to Lists
                     Ids.Add(Id);
                     Names.Add(Name);
                     Descriptions.Add(Description);
+                    Species.Add(Specie);
+                    FirstAppearances.Add(FirstAppearance);
+                    YearsCreated.Add(YearCreated);
                     // log transaction
                     logger.Info($"Character id {Id} added");
                 }
@@ -112,8 +124,8 @@ else
                 Console.WriteLine($"Name: {Names[i]}");
                 Console.WriteLine($"Description: {Descriptions[i]}");
                 Console.WriteLine($"Species: {Species[i]}");
-                Console.WriteLine($"First Appearance: {FirstAppeared[i]}");
-                Console.WriteLine($"Year Created: {YearCreated[i]}");
+                Console.WriteLine($"First Appearance: {FirstAppearances[i]}");
+                Console.WriteLine($"Year Created: {YearsCreated[i]}");
                 Console.WriteLine();
             }
         }
