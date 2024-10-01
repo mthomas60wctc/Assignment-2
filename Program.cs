@@ -42,6 +42,8 @@ else
                     characterDetails[4],
                     // 3rd array element contains character description
                     UInt64.Parse(characterDetails[5]));
+                CharacterList.Add(tempChar);
+
             }
         }
         sr.Close();
@@ -91,13 +93,13 @@ else
                     // input character description
                     Console.WriteLine("Year of first appearance:");
                     UInt64 YearCreated = UInt64.Parse(Console.ReadLine() ?? "0");
-                    // Console.WriteLine($"{Id}, {Name}, {Description}");
+                    Character tempChar = new Character(Id, Name, Description, Specie, FirstAppearance, YearCreated);
                     // create file from data
                     StreamWriter sw = new(file, true);
-                    sw.WriteLine($"{Id},{Name},{Description},{Specie},{FirstAppearance},{YearCreated}");
+                    sw.WriteLine(tempChar.GenerateCSV());
                     sw.Close();
                     // add new character details to List
-                    Character tempChar = new Character(Id, Name, Description, Specie, FirstAppearance, YearCreated);
+                    CharacterList.Add(tempChar);
                     // log transaction
                     logger.Info($"Character id {Id} added");
                 }
@@ -109,18 +111,12 @@ else
         }
         else if (choice == "2")
         {
-            // Display All Characters
+            // Display All Characters   
             // loop thru Lists
-            for (int i = 0; i < Ids.Count; i++)
+            foreach (Character c in CharacterList)
             {
                 // display character details
-                Console.WriteLine($"Id: {Ids[i]}");
-                Console.WriteLine($"Name: {Names[i]}");
-                Console.WriteLine($"Description: {Descriptions[i]}");
-                Console.WriteLine($"Species: {Species[i]}");
-                Console.WriteLine($"First Appearance: {FirstAppearances[i]}");
-                Console.WriteLine($"Year Created: {YearsCreated[i]}");
-                Console.WriteLine();
+                Console.WriteLine(c.DisplayCharacter());
             }
         }
     } while (choice == "1" || choice == "2");
