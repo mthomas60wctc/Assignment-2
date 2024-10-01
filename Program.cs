@@ -70,7 +70,7 @@ else
             if (!string.IsNullOrEmpty(Name))
             {
                 // check for duplicate name
-                List<string> LowerCaseNames = Names.ConvertAll(n => n.ToLower());
+                List<string> LowerCaseNames = CharacterList.ConvertAll(n => n.Name.ToLower());
                 if (LowerCaseNames.Contains(Name.ToLower()))
                 {
                     logger.Info($"Duplicate name {Name}");
@@ -78,16 +78,16 @@ else
                 else
                 {
                     // generate id - use max value in Ids + 1
-                    UInt64 Id = Ids.Max() + 1;
+                    UInt64 Id = CharacterList.Max(c => c.Id) + 1;
                     // input character description
                     Console.WriteLine("Enter description:");
-                    string? Description = Console.ReadLine();
+                    string Description = Console.ReadLine() ?? "";
                     // input character description
                     Console.WriteLine("Species:");
-                    string? Specie = Console.ReadLine();
+                    string Specie = Console.ReadLine() ?? "";
                     // input character description
                     Console.WriteLine("First game appearance:");
-                    string? FirstAppearance = Console.ReadLine();
+                    string FirstAppearance = Console.ReadLine() ?? "";
                     // input character description
                     Console.WriteLine("Year of first appearance:");
                     UInt64 YearCreated = UInt64.Parse(Console.ReadLine() ?? "0");
@@ -96,13 +96,8 @@ else
                     StreamWriter sw = new(file, true);
                     sw.WriteLine($"{Id},{Name},{Description},{Specie},{FirstAppearance},{YearCreated}");
                     sw.Close();
-                    // add new character details to Lists
-                    Ids.Add(Id);
-                    Names.Add(Name);
-                    Descriptions.Add(Description);
-                    Species.Add(Specie);
-                    FirstAppearances.Add(FirstAppearance);
-                    YearsCreated.Add(YearCreated);
+                    // add new character details to List
+                    Character tempChar = new Character(Id, Name, Description, Specie, FirstAppearance, YearCreated);
                     // log transaction
                     logger.Info($"Character id {Id} added");
                 }
