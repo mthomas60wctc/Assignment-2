@@ -15,12 +15,7 @@ else
 {
     // create parallel lists of character details
     // lists are used since we do not know number of lines of data
-    List<UInt64> Ids = [];
-    List<string> Names = [];
-    List<string?> Species = [];
-    List<string?> Descriptions = [];
-    List<string?> FirstAppearances = [];
-    List<UInt64> YearsCreated = [];
+    List<Character> CharacterList = [];
     // to populate the lists with data, read from the data file
     try
     {
@@ -35,17 +30,18 @@ else
                 // character details are separated with comma(,)
                 string[] characterDetails = line.Split(',');
                 // 1st array element contains id
-                Ids.Add(UInt64.Parse(characterDetails[0]));
-                // 2nd array element contains character name
-                Names.Add(characterDetails[1]);
-                // 3rd array element contains character description
-                Descriptions.Add(characterDetails[2]);
-                // 3rd array element contains character description
-                Species.Add(characterDetails[3]);
-                // 3rd array element contains character description
-                FirstAppearances.Add(characterDetails[4]);
-                // 3rd array element contains character description
-                YearsCreated.Add(UInt64.Parse(characterDetails[5]));
+                Character tempChar = new Character(
+                    UInt64.Parse(characterDetails[0]),
+                    // 2nd array element contains character name
+                    characterDetails[1],
+                    // 3rd array element contains character description
+                    characterDetails[2],
+                    // 3rd array element contains character description
+                    characterDetails[3],
+                    // 3rd array element contains character description
+                    characterDetails[4],
+                    // 3rd array element contains character description
+                    UInt64.Parse(characterDetails[5]));
             }
         }
         sr.Close();
@@ -71,7 +67,8 @@ else
             // Add Character
             Console.WriteLine("Enter new character name: ");
             string? Name = Console.ReadLine();
-            if (!string.IsNullOrEmpty(Name)){
+            if (!string.IsNullOrEmpty(Name))
+            {
                 // check for duplicate name
                 List<string> LowerCaseNames = Names.ConvertAll(n => n.ToLower());
                 if (LowerCaseNames.Contains(Name.ToLower()))
@@ -109,7 +106,9 @@ else
                     // log transaction
                     logger.Info($"Character id {Id} added");
                 }
-            } else {
+            }
+            else
+            {
                 logger.Error("You must enter a name");
             }
         }
