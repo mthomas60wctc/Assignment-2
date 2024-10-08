@@ -16,10 +16,10 @@ class Character{
     }
 
     public String DisplayCharacter(){
-        return $"Id: {Id}\nName: {Name}\nDescription: {Description}\nFirst Appearance: {Appearance}\nSpecies: {Species}\nYear Created: {YearCreated}";
+        return $"Id: {Id}\nName: {Name}\nDescription: {Description}\nFirst Appearance: {Appearance}\nSpecies: {Species}\nYear Created: {YearCreated}\n";
     }
 
     public String GenerateCSV(){
-        return $"{Id},{Name},{Description},{Species},{Appearance},{YearCreated}";
+        return $"{Id}|{Name}|{Description}|{Species}|{Appearance}|{YearCreated}";
     }
 }

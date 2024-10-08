@@ -28,7 +28,7 @@ else
             if (line is not null)
             {
                 // character details are separated with comma(,)
-                string[] characterDetails = line.Split(',');
+                string[] characterDetails = line.Split('|');
                 // 1st array element contains id
                 Character tempChar = new Character(
                     UInt64.Parse(characterDetails[0]),
@@ -36,11 +36,11 @@ else
                     characterDetails[1],
                     // 3rd array element contains character description
                     characterDetails[2],
-                    // 3rd array element contains character description
+                    // 4th array element contains character description
                     characterDetails[3],
-                    // 3rd array element contains character description
+                    // 5th array element contains character description
                     characterDetails[4],
-                    // 3rd array element contains character description
+                    // 6th array element contains character description
                     UInt64.Parse(characterDetails[5]));
                 CharacterList.Add(tempChar);
 
@@ -58,7 +58,7 @@ else
         // display choices to user
         Console.WriteLine("1) Add Character");
         Console.WriteLine("2) Display All Characters");
-        Console.WriteLine("Enter to quit");
+        Console.Write("Enter to quit: ");
 
         // input selection
         choice = Console.ReadLine();
@@ -67,7 +67,7 @@ else
         if (choice == "1")
         {
             // Add Character
-            Console.WriteLine("Enter new character name: ");
+            Console.Write("Enter new character name: ");
             string? Name = Console.ReadLine();
             if (!string.IsNullOrEmpty(Name))
             {
@@ -82,16 +82,16 @@ else
                     // generate id - use max value in Ids + 1
                     UInt64 Id = CharacterList.Max(c => c.Id) + 1;
                     // input character description
-                    Console.WriteLine("Enter description:");
+                    Console.Write("Enter description:");
                     string Description = Console.ReadLine() ?? "";
                     // input character description
-                    Console.WriteLine("Species:");
+                    Console.Write("Species:");
                     string Specie = Console.ReadLine() ?? "";
                     // input character description
-                    Console.WriteLine("First game appearance:");
+                    Console.Write("First game appearance:");
                     string FirstAppearance = Console.ReadLine() ?? "";
                     // input character description
-                    Console.WriteLine("Year of first appearance:");
+                    Console.Write("Year of first appearance:");
                     UInt64 YearCreated = UInt64.Parse(Console.ReadLine() ?? "0");
                     Character tempChar = new Character(Id, Name, Description, Specie, FirstAppearance, YearCreated);
                     // create file from data
